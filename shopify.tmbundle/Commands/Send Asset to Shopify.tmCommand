@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+# Setting up new framework based on what i've learnt working on a new project
+# this file is just a test for it
+source "$TM_SUPPORT_PATH/lib/bash_init.sh"
+"$TM_BUNDLE_SUPPORT/runner.php" assets upload
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@u</string>
+	<key>name</key>
+	<string>Send Asset to Shopify</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html.liquid</string>
+	<key>uuid</key>
+	<string>D5E756C3-A250-4540-9E73-2F2EDE898E21</string>
+</dict>
+</plist>

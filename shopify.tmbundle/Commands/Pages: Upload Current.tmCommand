@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+# Setting up new framework based on what i've learnt working on a new project
+# this file is just a test for it
+source "$TM_SUPPORT_PATH/lib/bash_init.sh"
+"$TM_BUNDLE_SUPPORT/runner.php" pages upload
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@u</string>
+	<key>name</key>
+	<string>Pages: Upload Current</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>C0D7D377-EB59-4880-AF04-9D7A3F6AC7DA</string>
+</dict>
+</plist>

@@ -1,0 +1,174 @@
+<div itemscope itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+<!--
+  <div class="section-header section-header--breadcrumb">
+    {% include 'breadcrumb' %}
+  </div>
+--->
+  <div class="product-single">
+    <div class="grid product-single__hero">
+      <div class="grid__item large--one-half" id="add-cart-new">
+        {% comment %}
+          <h3 itemprop="brand">{{ product.vendor }}</h3>
+        {% endcomment %}
+        <h1 itemprop="name">{{ product.title }}dsjghsdghslghsjkghjsghj</h1>
+
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          {% assign variant = product.selected_or_first_available_variant %}
+
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+          <div class="product-single__prices">
+            <span id="ProductPrice" class="product-single__price" itemprop="price">
+              {{ product.price | money }}
+            </span>
+
+            {% if product.compare_at_price > product.price %}
+              <s id="ComparePrice" class="product-single__sale-price">
+                {{ product.compare_at_price_max | money }}
+              </s>
+            {% endif %}
+          </div>
+
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+            <select name="id" id="productSelect" class="product-single__variants">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+
+            <div class="product-single__quantity{% unless settings.product_quantity_enable %} is-hidden{% endunless %}">
+              <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+              <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+            </div>
+
+            <button type="submit" name="add" id="AddToCart" class="btn">
+              <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+            </button>
+          </form>
+
+          <div class="product-description rte" itemprop="description">
+            {{ product.description }}
+          </div>
+          
+          
+
+        </div>
+		
+      </div>
+      {% if settings.product_thumbnails_position == 'below' or product.images.size < 2 %}
+<div id="maximage">
+  
+    {% for i in (1..6) %}
+      {% capture slide %}slide_{{ i }}{% endcapture %}
+      {% capture slide_link %}slide_{{ i }}_link{% endcapture %}
+      {% capture slide_img %}slide_{{ i }}.jpg{% endcapture %}
+      {% capture slide_alt %}slide_{{ i }}_alt{% endcapture %}
+      {% if settings[slide] %}
+        
+        	{% for i in (1..6) %}
+      {% capture slide %}slide_{{ i }}{% endcapture %}
+      {% capture slide_link %}slide_{{ i }}_link{% endcapture %}
+      {% capture slide_img %}slide_{{ i }}.jpg{% endcapture %}
+      {% capture slide_alt %}slide_{{ i }}_alt{% endcapture %}
+      {% if settings[slide] %}
+        
+          {% if product.images.size >= 1 %}
+
+    
+              {% for image in product.images %}
+    		
+                
+            <img src="{{ image.src | img_url: '1024x1024' }}" alt="{{ image.alt | escape }}">
+          
+ 
+        	            
+                  
+               
+              {% endfor %}
+            
+
+          {% endif %}
+      
+      {% endif %}
+    {% endfor %}
+        
+      {% endif %}
+    {% endfor %}
+ 
+</div>
+      <div class="product_also">
+        <h3 class="Also">{{'Oh, Also '}}</h3>
+{% include 'featured-products' %}
+      </div>
+      <div >
+
+        
+         
+
+        {% else %}
+
+          <div class="grid">
+
+            <div class="grid__item four-fifths product-single__photos" id="ProductPhoto">
+              {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+              <img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg"{% if settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ featured_image | img_url: '1024x1024' }}"{% endif %} data-image-id="{{ featured_image.id }}">
+            </div>
+
+            <div class="grid__item one-fifth">
+
+              <ul class="grid product-single__thumbnails" id="ProductThumbs">
+                {% for image in product.images %}
+                  <li class="grid__item">
+                    <a data-image-id="{{ image.id }}" href="{{ image.src | img_url: '1024x1024' }}" class="product-single__thumbnail">
+                      <img src="{{ image.src | img_url: 'grande' }}" alt="{{ image.alt | escape }}">
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+            </div>
+
+          </div>
+
+        {% endif %}
+
+        {% if settings.product_image_zoom_type == 'lightbox' %}
+        <ul class="gallery" class="hidden">
+          {% for image in product.images %}
+          <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '1024x1024' }}"></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+      </div>
+      
+    </div>
+  </div>
+
+  {% if settings.product_related_enable %}
+    {% include 'related-products' %}
+  {% endif %}
+
+</div>
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+$(function(){
+	// Trigger maximage
+	jQuery('#maximage').maximage();
+});
+
+</script>
+
